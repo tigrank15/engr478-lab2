@@ -19,8 +19,8 @@ LARGER	SPACE	4					; allocates 4 uninitialized bytes in RAM for LARGER
 		; Code
 		AREA    |.text|, CODE, READONLY, ALIGN=2	; code in flash ROM
 		EXPORT  Start				; export public function "start" for use elsewhere
-NUM1   	DCD   	5					; 32-bit constant data NUM1 = -1
-NUM2	DCD		3					; 32-bit constant data NUM2 = 2
+NUM1   	DCD   	10					; 32-bit constant data NUM1 = 10
+NUM2	DCD		5					; 32-bit constant data NUM2 = 5
 ;-------End of Assembler Directives----------
 
 
@@ -43,10 +43,19 @@ GET_ABS								; label GET_ABS, calculate the absolute difference if the differe
 		RSB	R0, R0, #0				; R0=0-R0;
 		B	STR_ABS					; branch to STR_ABS to store the result
 
+GET_LARGER
+		LDR R3, =LARGER				; R3 points to LARGER
+		CMP R1, R2					; Compare R1 and R2 and update condition code bits: R1 - R2
+		STRGT R1, [R3]				; Store R1 if Z = 0 and N = V (greater than)
+		STRLE R2, [R3]				; Store R2 if Z = 1 and N != V (less than)
+		BX LR						; subroutine return
+		
+		
 Start	LDR R1, NUM1				; R1=NUM1
 		LDR R2,	NUM2				; R2=NUM2
 		BL	GET_SUM
 		BL	GET_DIFF
+		BL	GET_LARGER
 
 		ALIGN                       ; make sure the end of this section is aligned
 		END                         ; end of file
