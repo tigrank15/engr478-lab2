@@ -10,9 +10,11 @@
 		EXPORT  SUM	[DATA,SIZE=4]	; export public varialbe "SUM" for use elsewhere
 		EXPORT  DIFF [DATA,SIZE=4]	; export public varialbe "DIFF" for use elsewhere
 		EXPORT  ABS [DATA,SIZE=4]	; export public varialbe "ABS" for use elsewhere
+		EXPORT	LARGER [DATA, SIZE=4]; add a new variable "LARGER"
 SUM     SPACE	4   				; allocates 4 uninitialized bytes in RAM for SUM
 DIFF	SPACE	4					; allocates 4 uninitialized bytes in RAM for DIFF
 ABS		SPACE	4					; allocates 4 uninitialized bytes in RAM for ABS
+LARGER	SPACE	4					; allocates 4 uninitialized bytes in RAM for LARGER
 
 		; Code
 		AREA    |.text|, CODE, READONLY, ALIGN=2	; code in flash ROM
